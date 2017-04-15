@@ -11806,7 +11806,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import libraries necessary for this project</span>
@@ -11880,23 +11880,23 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># TODO: Minimum price of the data</span>
-<span class="n">minimum_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">minimum_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
 <span class="c1"># TODO: Maximum price of the data</span>
-<span class="n">maximum_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">maximum_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
 <span class="c1"># TODO: Mean price of the data</span>
-<span class="n">mean_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
 <span class="c1"># TODO: Median price of the data</span>
-<span class="n">median_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span class="n">median_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
 <span class="c1"># TODO: Standard deviation of prices of the data</span>
-<span class="n">std_price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">std_price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
 <span class="c1"># Show the calculated statistics</span>
 <span class="k">print</span> <span class="s2">&quot;Statistics for Boston housing dataset:</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -11925,7 +11925,7 @@ Minimum price: $105,000.00
 Maximum price: $1,024,800.00
 Mean price: $454,342.94
 Median price $438,900.00
-Standard deviation of prices: $165,340.28
+Standard deviation of prices: $165,171.13
 </pre>
 </div>
 </div>
@@ -11958,9 +11958,9 @@ Standard deviation of prices: $165,340.28
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ul>
-<li>Bigger 'RM' might lead to higher price estimate</li>
-<li>Bigger 'LSTAT' might lead to lower price estimate</li>
-<li>Bigger 'PTRATIO' might lead to lower prices estimate</li>
+<li>Bigger 'RM' means there are more rooms in the house, therefore the house will be bigger and more costly to build, so bigger 'RM' might lead to higher price estimate.</li>
+<li>Bigger 'LSTAT' means there will be more lower class people, who presumably cannot afford expensive homes. So the lower average home prices in the neighboorhood might lead to lower price estimate</li>
+<li>Bigger 'PTRATIO' usually means family pay less money on education so presumably they will spend less on housing. That will lead to lower average house price and lower prices estimate</li>
 </ul>
 
 </div>
@@ -12094,7 +12094,7 @@ Standard deviation of prices: $165,340.28
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-R^2 score is good. I think the prediction succesfully captured the variation of the target variable.</p>
+By looking at the true value and prediction, we can see that the prediction follows the true value pretty good. The predicted value and true value almost always stay within 10%-off range. R^2 score is good since it's close to 1 which is the optimal value, but since the variation for the data set is not small, the R^2 itself doesn't necessarily mean the prediction is that good.</p>
 
 </div>
 </div>
@@ -13260,7 +13260,7 @@ MzMzMzNrGb4IgpmZmZmZtQx3gMzMzMzMrGW4A2RmZmZmZi3DHSDoiEbGAAAAFklEQVQzMzMzM2sZ
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-Let's take a look at the graph where <code>max_depth</code> is 6. As we have more training points, the traing score goes down, and the testing score goes up. Having more training points will increase the testing score, and also make the model more consistent between training data and testing data (which should be good thing, right?).</p>
+Let's take a look at the graph where <code>max_depth</code> is 6. As we have more training points, the traing score goes down, and the testing score goes up. However, when we give too much input, we can see that the testing score starts to diverge from the best result. So it's not necessarily true that having more training data will always benefit the model.</p>
 
 </div>
 </div>
@@ -13726,8 +13726,8 @@ gg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-With maximum depth of 1, the testing score is very low, so it suffers from high bias.</p>
-<p>With maximum depth of 10, the training score is great, but the test score is not high. This means the model doesn't generailize well. I suppose it overfits with a more complex model but without enough training data. It suffers from high variance.</p>
+With maximum depth of 1, the training score is very low. This indicates that it suffers from high bias.</p>
+<p>With maximum depth of 10, the training score is great, but the test score is not as high, and there's a big difference between these two scores. This means the model doesn't generailize well. I suppose it overfits with a more complex model but without enough training data. It suffers from high variance.</p>
 
 </div>
 </div>
@@ -13780,7 +13780,7 @@ Setting maximum depth with 3 or 4 gives us the best testing score and I think th
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>Grid search is a method to find the best parameterized models among many models (backed by different parameters).</p>
+<p>Grid search is a method to find the best parameterized models among many models (backed by different parameters). It does a exhaustive search, meaning it will try to evaluate every possible parameter value we specified. In this case, it will basically try every <code>max_depth</code> for the decision tree model and use cross validation to find the best value for it.</p>
 
 </div>
 </div>
@@ -13802,7 +13802,9 @@ Setting maximum depth with 3 or 4 gives us the best testing score and I think th
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>K-fold cross-validation is the process of measuring the performance of a model. K-fold use different parts of the data for training and testing and generate a overall evaluation of the model's performance. We use K-fold cross-validation to compare models so we can find the best one.</p>
+<p>K-fold cross-validation is the process of measuring the performance of a model. K-fold splits the data into k parts, then in the next k iterations, any part will have chance to be the test data while the rest of the parts will be the training data. After k iterations, we get k results, and we return the average as the final result.</p>
+<p>The benefit of using k-fold is any parts of the data get the chance to be test data or train data, so we eliminate the potential bias from the data.</p>
+<p>Grid search is process of exhaustively searching over the parameter values to find the best model parameters. We have to provide a validation mechanism to tell which parameter combination makes a good model and which doesn't. So we use k-fold cross-validation during grid search to help us identify the best model parameters.</p>
 
 </div>
 </div>
@@ -14041,7 +14043,7 @@ Parameter &#39;max_depth&#39; is 4 for the optimal model.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-Parameter 'max_depth' is 4 for the optimal model.</p>
+Parameter 'max_depth' is 4 for the optimal model. It matches my guess in Question 6 (3 or 4 for the value of <code>max_depth</code>)</p>
 
 </div>
 </div>
@@ -14140,7 +14142,11 @@ Predicted selling price for Client 3&#39;s home: $931,636.36
 <li><p>Predicted selling price for Client 3's home: $931,636.36</p>
 </li>
 </ul>
-<p>The prices seem reasonable considering their features' value. My inituition in was right.</p>
+<p>Compare with my initution in the Data Exploration section:</p>
+<p>Client 2's home has very few rooms(=&gt; low price), high poverty level(=&gt; low price), and high student-teacher ratio(=&gt; low price). The estimator also reports the lowest price among the 3 clients.</p>
+<p>Cient 3's home has more rooms(=&gt; high price), low poverty level(=&gt; high price), and low student-teacher ratio(=&gt; high price). The estimator also gives a high price estimation.</p>
+<p>Client 1's feature values lie between the other two homes, so is the price estimation.</p>
+<p>So the price estimation seem reasonable and it aligns with my previous guess.</p>
 
 </div>
 </div>

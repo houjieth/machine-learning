@@ -4,6 +4,7 @@ from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
 import pudb
+import math
 
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
@@ -24,12 +25,15 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set any additional class parameters as needed
+        self.t = 0       # trail number
 
 
     def reset(self, destination=None, testing=False):
         """ The reset function is called at the beginning of each trial.
             'testing' is set to True if testing trials are being used
             once training trials have completed. """
+
+        self.t += 1
 
         # Select the destination as the new location to route to
         self.planner.route_to(destination)
@@ -39,14 +43,24 @@ class LearningAgent(Agent):
         ###########
         # Update epsilon using a decay function of your choice
         # Update additional class parameters as needed
-        # If 'testing' is True, set epsilon and alpha to 0
+        # If 'testing' is True, set epsilon ajjjjjnd alpha to 0
         if not testing:
-            self.epsilon -= 0.05
+            # Linear decay
+            # self.epsilon -= 0.002
+
+            # Exponential decay
+            # self.epsilon = math.pow(0.95, self.t)
+            # self.epsilon = 1.0 / (self.t ** 2)
+            # self.epsilon *= 0.98
+            self.epsilon = math.exp(-0.01 * self.t)
+
+            # Cosine decay
+            # self.epsilon = math.cos(0.005 * self.t)
+
         else:
             self.epsilon = 0
             self.alpha = 0
 
-        return None
 
     def build_state(self):
         """ The build_state function is called when the agent requests data from the 
@@ -68,7 +82,6 @@ class LearningAgent(Agent):
             inputs['light'],
             inputs['oncoming'],
             inputs['left'],
-            inputs['right'],
         )
         return state
 
@@ -126,19 +139,16 @@ class LearningAgent(Agent):
         # When learning, choose a random action with 'epsilon' probability
         #   Otherwise, choose an action with the highest Q-value for the current state
         if not self.learning:
-            # random select an action
-            action = self.valid_actions[random.randint(0, len(self.valid_actions) - 1)]
+            action = random.choice(self.valid_actions)
         else:
             r = random.uniform(0, 1)
             if r < self.epsilon:
-                # random select an action
-                action = self.valid_actions[random.randint(0, len(self.valid_actions) - 1)]
+                action = random.choice(self.valid_actions)
             else:
-                max_value = float('-inf')
+                max_value = self.get_maxQ(state)
                 action_value_map = self.Q[state]
                 for action_name in action_value_map:
-                    if action_value_map[action_name] > max_value:
-                        max_value = action_value_map[action_name]
+                    if action_value_map[action_name] == max_value:
                         action = action_name
         return action
 
@@ -153,8 +163,8 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
-        new_state = self.build_state()
-        self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * (reward + self.get_maxQ(new_state))
+        if self.learning:
+            self.Q[state][action] = (1 - self.alpha) * self.Q[state][action] + self.alpha * reward
 
 
     def update(self):
@@ -181,7 +191,7 @@ def run():
     #   verbose     - set to True to display additional output from the simulation
     #   num_dummies - discrete number of dummy agents in the environment, default is 100
     #   grid_size   - discrete number of intersections (columns, rows), default is (8, 6)
-    env = Environment(verbose=True)
+    env = Environment(verbose=False)
 
     ##############
     # Create the driving agent
@@ -190,7 +200,9 @@ def run():
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
     agent = env.create_agent(LearningAgent,
-                             learning=True)
+                             learning=True,
+                             alpha=0.5,
+                             epsilon=1.0)
 
     ##############
     # Follow the driving agent
@@ -207,15 +219,18 @@ def run():
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
     sim = Simulator(env,
-                    update_delay=0.001,
-                    log_metrics=True)
+                    update_delay=0.0001,
+                    log_metrics=True,
+                    optimized=True,
+                    display=False)
 
     ##############
     # Run the simulator
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=10)
+    sim.run(n_test=100,
+            tolerance=0.01)
 
 
 if __name__ == '__main__':

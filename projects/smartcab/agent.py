@@ -147,12 +147,9 @@ class LearningAgent(Agent):
             else:
                 max_value = self.get_maxQ(state)
                 action_value_map = self.Q[state]
-                best_action_names = []
                 for action_name in action_value_map:
                     if action_value_map[action_name] == max_value:
-                        best_action_names.append(action_name)
-                action = random.choice(best_action_names)
-
+                        action = action_name
         return action
 
 
